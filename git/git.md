@@ -26,3 +26,58 @@ Shell
 2:表示自打tag tag1 以来有2次提交(commit)g026498b：g 为git的缩写，在多种管理工具并存的环境中很有用处；
 //更多请阅读：https://www.yiibai.com/git/git_describe.html
 
+## git merge
+
+场景： 当本地修改push 到远端后，有想修改一些内容并追加到上一个commit 中
+
+面对这种情况，目前我认知里有两种方式可以解决：
+1.  git add ./git add -u
+    git commit --amend
+    git push -f
+    以上这种情况可能会覆盖远程的仓库，不建议如此使用
+    但是像gerrit amend 之后push 并不会冲突，因为commit 在审核阶段，并未真正的merge
+    （gerrit 说法存疑，暂时暂时先这样，也懒得研究）
+
+>    但一般情况下，可能并没有权限，或者为保护分支，或者明令要求不能使用-f 强制推送仓库，导致远端的存储仓库被强制覆盖
+
+2.  所以第二种方式,当然git pull 操作是必要的
+    在写代码前也应该如此，同步代码之后，合并冲突的该率会减小很多，但是多人协作免不了合并冲突
+
+    git pull 合并冲突时会有提示
+
+    根据冲突文件的标识，去做相应的修改,冲突标识如下
+    >>>
+    ===
+    <<<
+    仅需选定自己需要保留，删除标识和其他不需要内容即可
+
+    git add 之前修改了的冲突的文件
+
+    git merge --abort 会放弃当前的merge操作
+    如果确定无误使用
+    git merge --continue（该操作和cherry-pick 的操作极为相似，联系cherry-pick 操作时，也会用到）
+
+    此时就会有一条merge 记录生成，git push 也可以成功了，因为我们已经解决了冲突了
+
+    9e7f2d0 (HEAD -> main, origin/main) Merge branch 'main' of github.com:DustMerlin/note into main
+    c8e2ffc vim settabstop
+    95161ca vim settabstop
+
+
+    commit 9e7f2d0a143b0c51773be414368e15e16b47a827 (HEAD -> main, origin/main)
+    Merge: c8e2ffc 95161ca
+    Author: MerlinDust <MerlinDust@foxmail.com>
+    Date:   Fri Feb 24 10:01:41 2023 +0800
+
+        Merge branch 'main' of github.com:DustMerlin/note into main
+
+merlin@merlin:~/Documents/note$ git log -n5 --graph --oneline
+*   9e7f2d0 (HEAD -> main, origin/main) Merge branch 'main' of github.com:DustMerlin/note into main
+|\  
+| * 95161ca vim settabstop
+* | c8e2ffc vim settabstop
+|/  
+* 2afab72 some jenkins note
+* 0c2ea37 anaconda and software_selection(tui)
+
+从图形上看，是从main merge 到 origin/main
