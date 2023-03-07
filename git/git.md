@@ -81,3 +81,7 @@ merlin@merlin:~/Documents/note$ git log -n5 --graph --oneline
 * 0c2ea37 anaconda and software_selection(tui)
 
 从图形上看，是从main merge 到 origin/main
+
+## git new branch to push origin 
+
+git push --set-upstream origin test
