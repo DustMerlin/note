@@ -109,3 +109,7 @@ merlin@merlin:~/Documents/note$ git log -n5 --graph --oneline
     git branch -av
     * main                7c8508e set origin branch and push
     remotes/origin/main 7c8508e set origin branch and push
+
+    使用git push -u oringin test 
+    然后使用git branch -vv 
+    即可看到 本地分支和远端分支的关联
