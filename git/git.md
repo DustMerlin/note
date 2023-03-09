@@ -84,4 +84,28 @@ merlin@merlin:~/Documents/note$ git log -n5 --graph --oneline
 
 ## git new branch to push origin 
 
-git push --set-upstream origin test
+    git push --set-upstream origin test
+
+## 关联远端分支（自己瞎起的名字，而且可能还使用不成功）
+
+    git branch -u origin/main
+
+    执行此命令，需要注意当前所在的分支,可能需要一个远端存在的分支？
+    此处再测试一下，但是并不过度深入，目前使用的场景不多，暂时不需要那么细致的了解
+    测试结果： 当远端的分支不存在时，不能将本地的分支与远端不存在的关联
+    所以还是需要使用 git push -u origin test 先推送test 分支
+    
+    git branch -u 的操作，应该是可以本地与远端项目关联的，仅为推测，不确定
+
+    但是本地分支推动到远端的时候
+    还是需要使用上一节中使用的命令,git push -u origin branch_name
+ 
+    -u , --set-upsteream 的 缩写 
+
+    可以显示 本地分支和远端分支的对应
+    git branch -vv 
+    * main 7c8508e [origin/main] set origin branch and push
+
+    git branch -av
+    * main                7c8508e set origin branch and push
+    remotes/origin/main 7c8508e set origin branch and push
